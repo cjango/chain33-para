@@ -35,7 +35,7 @@ class Client extends BaseClient
 
         $txHex = $this->paraTransaction($txHex, $this->config['pay_addr']);
 
-        $data = $this->sign($privateKey, $txHex, '1h', 0, 2);
+        $data = $this->sign($privateKey, $txHex, '300s', 0, 2);
 
         return $this->send($data);
     }
@@ -78,6 +78,8 @@ class Client extends BaseClient
         string $execName = '',
         string $note = ''
     ): string {
+        $this->unlock(false);
+
         return $this->client->CreateRawTransaction([
             'to'          => $to,
             'amount'      => $amount,
